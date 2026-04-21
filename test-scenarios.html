@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tab Chaos Analyzer - Test Scenarios</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .scenario { background: #f5f5f5; padding: 15px; margin: 10px 0; border-radius: 8px; }
+        button { background: #3b82f6; color: white; padding: 10px 20px; border: none; border-radius: 5px; margin: 5px; cursor: pointer; }
+        button:hover { background: #2563eb; }
+        .warning { background: #fef3c7; padding: 10px; border-radius: 5px; margin: 10px 0; }
+        .result { background: #d1fae5; padding: 10px; border-radius: 5px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Tab Chaos Analyzer Test Scenarios</h1>
+    
+    <div class="warning">
+        <strong>⚠️ Warning:</strong> These tests will open multiple tabs. Make sure you're ready and have your extension loaded first!
+    </div>
+
+    <div class="scenario">
+        <h3>🧘‍♀️ Test 1: Zen Master (Perfect Score)</h3>
+        <p>Creates a clean, organized browsing session</p>
+        <button onclick="createZenScenario()">Create Zen Scenario</button>
+        <div id="zen-result"></div>
+    </div>
+
+    <div class="scenario">
+        <h3>📚 Test 2: Digital Hoarder (Moderate Chaos)</h3>
+        <p>Creates duplicates, domain clustering, and some volume</p>
+        <button onclick="createHoarderScenario()">Create Hoarder Scenario</button>
+        <div id="hoarder-result"></div>
+    </div>
+
+    <div class="scenario">
+        <h3>🔥 Test 3: Browser Apocalypse (Maximum Chaos)</h3>
+        <p>Creates extreme chaos with duplicates, clustering, and high volume</p>
+        <button onclick="createApocalypseScenario()">Create Apocalypse Scenario</button>
+        <div id="apocalypse-result"></div>
+    </div>
+
+    <div class="scenario">
+        <h3>⚡ Test 4: Panic Burst Detection</h3>
+        <p>Opens multiple tabs quickly to trigger panic burst detection</p>
+        <button onclick="createPanicBurst()">Create Panic Burst</button>
+        <div id="panic-result"></div>
+    </div>
+
+    <div class="scenario">
+        <h3>🧹 Test 5: Clean Up</h3>
+        <p>Close all test tabs to reset</p>
+        <button onclick="cleanupTestTabs()" style="background: #ef4444;">Cleanup Test Tabs</button>
+        <div id="cleanup-result"></div>
+    </div>
+
+    <script>
+        let testTabs = [];
+
+        function createZenScenario() {
+            // Close most tabs except a few essentials
+            const result = document.getElementById('zen-result');
+            result.innerHTML = '<div class="result">✅ Zen scenario ready! You should have 3-5 clean tabs. Test your extension now!</div>';
+        }
+
+        async function createHoarderScenario() {
+            const result = document.getElementById('hoarder-result');
+            result.innerHTML = 'Creating hoarder scenario...';
+            
+            try {
+                // Create duplicates
+                const duplicateUrls = [
+                    'https://google.com',
+                    'https://google.com',
+                    'https://google.com'
+                ];
+
+                // Create domain clustering
+                const youtubeUrls = [
+                    'https://youtube.com',
+                    'https://youtube.com/trending',
+                    'https://youtube.com/subscriptions',
+                    'https://youtube.com/library',
+                    'https://youtube.com/history'
+                ];
+
+                // Create some volume
+                const volumeUrls = [
+                    'https://github.com',
+                    'https://stackoverflow.com',
+                    'https://reddit.com',
+                    'https://twitter.com',
+                    'https://linkedin.com',
+                    'https://facebook.com',
+                    'https://instagram.com'
+                ];
+
+                const allUrls = [...duplicateUrls, ...youtubeUrls, ...volumeUrls];
+                
+                for (const url of allUrls) {
+                    const newTab = window.open(url, '_blank');
+                    if (newTab) testTabs.push(newTab);
+                    // Small delay to avoid browser blocking
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                }
+
+                result.innerHTML = `<div class="result">✅ Created ${allUrls.length} tabs for hoarder scenario! Test your extension now!<br>
+                Expected: Score 25-49, "Digital Hoarder" level</div>`;
+            } catch (error) {
+                result.innerHTML = `<div style="background: #fee2e2; color: #dc2626; padding: 10px; border-radius: 5px;">Error: ${error.message}</div>`;
+            }
+        }
+
+        async function createApocalypseScenario() {
+            const result = document.getElementById('apocalypse-result');
+            result.innerHTML = 'Creating apocalypse scenario... 💀';
+            
+            try {
+                // Extreme duplicates
+                const urls = [];
+                
+                // Lots of duplicates
+                for (let i = 0; i < 8; i++) {
+                    urls.push('https://google.com');
+                    urls.push('https://github.com');
+                    urls.push('https://stackoverflow.com');
+                }
+
+                // Extreme domain clustering
+                for (let i = 0; i < 12; i++) {
+                    urls.push(`https://youtube.com/watch?v=${Math.random()}`);
+                }
+
+                // High volume random sites
+                const sites = [
+                    'reddit.com', 'twitter.com', 'facebook.com', 'instagram.com',
+                    'linkedin.com', 'pinterest.com', 'tiktok.com', 'snapchat.com',
+                    'discord.com', 'telegram.org', 'whatsapp.com', 'slack.com',
+                    'zoom.us', 'teams.microsoft.com', 'notion.so', 'figma.com'
+                ];
+
+                for (const site of sites) {
+                    urls.push(`https://${site}`);
+                }
+
+                for (const url of urls) {
+                    const newTab = window.open(url, '_blank');
+                    if (newTab) testTabs.push(newTab);
+                    await new Promise(resolve => setTimeout(resolve, 50));
+                }
+
+                result.innerHTML = `<div class="result">🔥 APOCALYPSE CREATED! ${urls.length} tabs opened!<br>
+                Expected: Score 0-24, "Browser Apocalypse" level<br>
+                Your browser might be crying now... 😅</div>`;
+            } catch (error) {
+                result.innerHTML = `<div style="background: #fee2e2; color: #dc2626; padding: 10px; border-radius: 5px;">Error: ${error.message}</div>`;
+            }
+        }
+
+        async function createPanicBurst() {
+            const result = document.getElementById('panic-result');
+            result.innerHTML = 'Creating panic burst...';
+            
+            try {
+                // Open 6 tabs very quickly (within 30 seconds to trigger panic detection)
+                const burstUrls = [
+                    'https://google.com/search?q=panic',
+                    'https://google.com/search?q=burst',
+                    'https://google.com/search?q=detected',
+                    'https://google.com/search?q=help',
+                    'https://google.com/search?q=chaos',
+                    'https://google.com/search?q=analyzer'
+                ];
+
+                for (const url of burstUrls) {
+                    const newTab = window.open(url, '_blank');
+                    if (newTab) testTabs.push(newTab);
+                    // Very small delay to simulate rapid opening
+                    await new Promise(resolve => setTimeout(resolve, 10));
+                }
+
+                result.innerHTML = `<div class="result">⚡ Panic burst created! 6 tabs opened rapidly.<br>
+                Extension should detect this as panic opening behavior!</div>`;
+            } catch (error) {
+                result.innerHTML = `<div style="background: #fee2e2; color: #dc2626; padding: 10px; border-radius: 5px;">Error: ${error.message}</div>`;
+            }
+        }
+
+        function cleanupTestTabs() {
+            const result = document.getElementById('cleanup-result');
+            let closed = 0;
+            
+            testTabs.forEach(tab => {
+                try {
+                    if (tab && !tab.closed) {
+                        tab.close();
+                        closed++;
+                    }
+                } catch (e) {
+                    // Tab might already be closed or blocked
+                }
+            });
+            
+            testTabs = [];
+            result.innerHTML = `<div class="result">🧹 Attempted to close ${closed} test tabs. You may need to close some manually.</div>`;
+        }
+
+        // Auto-focus on page load
+        window.addEventListener('load', () => {
+            document.body.scrollIntoView();
+        });
+    </script>
+</body>
+</html>

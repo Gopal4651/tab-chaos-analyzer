@@ -1,4 +1,10 @@
-import type { StoredTabEvent } from '@/lib/types.js';
+// Background script for Tab Chaos Analyzer
+interface StoredTabEvent {
+  timestamp: number;
+  action: 'opened' | 'closed';
+  url: string;
+  windowId: number;
+}
 
 // Event tracking for panic burst detection
 class TabEventTracker {
@@ -58,14 +64,17 @@ chrome.tabs.onRemoved.addListener(async (tabId, removeInfo) => {
   await TabEventTracker.trackTabEvent('closed', dummyTab);
 });
 
-// Clean up old events periodically (every 30 minutes)
-chrome.alarms.create('cleanup-events', { periodInMinutes: 30 });
-
-chrome.alarms.onAlarm.addListener((alarm) => {
-  if (alarm.name === 'cleanup-events') {
-    TabEventTracker.clearOldEvents();
-  }
-});
+// Clean up old events periodically (requires "alarms" permission in manifest)
+try {
+  chrome.alarms.create('cleanup-events', { periodInMinutes: 30 });
+  chrome.alarms.onAlarm.addListener((alarm) => {
+    if (alarm.name === 'cleanup-events') {
+      void TabEventTracker.clearOldEvents();
+    }
+  });
+} catch (e) {
+  console.warn('Tab Chaos Analyzer: alarms unavailable, periodic cleanup disabled', e);
+}
 
 // Handle messages from popup
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {

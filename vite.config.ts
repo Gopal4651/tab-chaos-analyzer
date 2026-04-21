@@ -6,7 +6,12 @@ import manifest from './manifest.json';
 export default defineConfig({
   plugins: [
     react(),
-    crx({ manifest }),
+    crx({ 
+      manifest,
+      contentScripts: {
+        injectCss: true,
+      },
+    }),
   ],
   resolve: {
     alias: {
@@ -17,7 +22,10 @@ export default defineConfig({
     rollupOptions: {
       input: {
         popup: 'src/popup/index.html',
+        background: 'src/background/index.ts',
       },
     },
+    target: 'esnext',
+    minify: false,
   },
 });
