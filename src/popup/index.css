@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    width: 400px;
+    min-height: 500px;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+}
+
+@layer components {
+  .chaos-score-circle {
+    @apply relative inline-flex items-center justify-center;
+  }
+  
+  .chaos-score-circle svg {
+    transform: rotate(-90deg);
+  }
+  
+  .chaos-level-zen {
+    @apply text-chaos-zen bg-chaos-zen/10 border-chaos-zen/20;
+  }
+  
+  .chaos-level-organized {
+    @apply text-chaos-good bg-chaos-good/10 border-chaos-good/20;
+  }
+  
+  .chaos-level-controlled {
+    @apply text-chaos-mild bg-chaos-mild/10 border-chaos-mild/20;
+  }
+  
+  .chaos-level-hoarder {
+    @apply text-chaos-bad bg-chaos-bad/10 border-chaos-bad/20;
+  }
+  
+  .chaos-level-apocalypse {
+    @apply text-chaos-apocalypse bg-chaos-apocalypse/10 border-chaos-apocalypse/20;
+  }
+  
+  .suggestion-button {
+    @apply px-3 py-1.5 text-sm font-medium rounded-lg transition-colors;
+  }
+  
+  .suggestion-button-high {
+    @apply bg-chaos-bad hover:bg-chaos-bad/90 text-white;
+  }
+  
+  .suggestion-button-medium {
+    @apply bg-chaos-mild hover:bg-chaos-mild/90 text-white;
+  }
+  
+  .suggestion-button-low {
+    @apply bg-chaos-good hover:bg-chaos-good/90 text-white;
+  }
+}

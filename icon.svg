@@ -1,0 +1,18 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="64" cy="64" r="60" fill="#3b82f6" stroke="#1e40af" stroke-width="4"/>
+  
+  <!-- Tab representation -->
+  <g fill="#ffffff" stroke="none">
+    <!-- Main tab -->
+    <rect x="32" y="48" width="64" height="32" rx="4"/>
+    <!-- Tab handle -->
+    <rect x="32" y="40" width="20" height="8" rx="2"/>
+    <!-- Additional tabs behind -->
+    <rect x="38" y="44" width="58" height="28" rx="4" opacity="0.6"/>
+    <rect x="44" y="52" width="52" height="24" rx="4" opacity="0.3"/>
+  </g>
+  
+  <!-- Chaos indicator (lightning bolt) -->
+  <path d="M75 58 L82 50 L78 50 L84 42 L77 50 L81 50 L75 58 Z" fill="#fbbf24" stroke="#f59e0b" stroke-width="1"/>
+</svg>
